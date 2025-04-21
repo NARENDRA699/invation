@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Language Translator</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 50%;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+h2 {
+  margin-top: 20px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Language Translator</h1>
+
+    <label for="source-language">Source Language:</label>
+    <select id="source-language">
+      <option value="en">English</option>
+      <option value="es">Spanish</option>
+      <option value="fr">French</option>
+      <!-- Add more languages as needed -->
+    </select>
+
+    <label for="target-language">Target Language:</label>
+    <select id="target-language">
+      <option value="es">Spanish</option>
+      <option value="en">English</option>
+      <option value="fr">French</option>
+      <!-- Add more languages as needed -->
+    </select>
+
+    <textarea id="input-text" placeholder="Enter text to translate..."></textarea>
+    <button id="translate-btn">Translate</button>
+
+    <h2>Translation:</h2>
+    <p id="output-text">Your translation will appear here.</p>
+  </div>
+
+  <script src="app.js">
+    // app.js
+document.getElementById("translate-btn").addEventListener("click", translateText);
+
+async function translateText() {
+  const sourceLang = document.getElementById("source-language").value;
+  const targetLang = document.getElementById("target-language").value;
+  const inputText = document.getElementById("input-text").value;
+
+  // Check if input text is provided
+  if (!inputText) {
+    alert("Please enter text to translate.");
+    return;
+  }
+
+  // Make a request to the translation API
+  const apiUrl = "https://libretranslate.de/translate";
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      q: inputText,
+      source: sourceLang,
+      target: targetLang,
+    }),
+  });
+
+  const data = await response.json();
+
+  if (data && data.translatedText) {
+    // Display the translated text
+    document.getElementById("output-text").textContent = data.translatedText;
+  } else {
+    document.getElementById("output-text").textContent = "Translation failed.";
+  }
+}
+
+  </script>
+</body>
+</html>

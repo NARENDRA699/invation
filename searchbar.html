@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Recommendations</title>
+    <link rel="stylesheet" href="search.css">
+</head>
+<body>
+    <h1>Search What You Want...</h1>
+    <input type="text" id="searchQuery" placeholder="Enter search term..." oninput="fetchSuggestions()">
+    
+    <div id="suggestions"></div>
+    <button onclick="fetchVideos()">Search</button>
+    <div id="videoPlayer"></div>
+    <div id="results"></div>
+    <script src="script.js"></script>
+</body>
+</html>
